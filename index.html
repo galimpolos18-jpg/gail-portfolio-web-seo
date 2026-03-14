@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gail — SEO & Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F9F8F5;
+  --bg-card: #FFFFFF;
+  --text: #18180F;
+  --muted: #7A7A6E;
+  --accent: #E8470A;
+  --accent-bg: #FEF0EA;
+  --border: #E4E4DC;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(249,248,245,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.nav-logo { font-family: var(--serif); font-size: 1.15rem; color: var(--text); text-decoration: none; }
+
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+
+.nav-links a { font-size: 0.875rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+.btn-hire {
+  font-size: 0.8rem !important;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  padding: 0.45rem 1.25rem;
+  transition: background 0.2s, color 0.2s !important;
+}
+.btn-hire:hover { background: var(--accent); color: #fff !important; }
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span { display: block; height: 1.5px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* MOBILE DRAWER */
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 60px; left: 0; right: 0; bottom: 0;
+  background: rgba(249,248,245,0.97);
+  backdrop-filter: blur(16px);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.mobile-drawer.open { opacity: 1; pointer-events: all; }
+.mobile-drawer a { font-family: var(--serif); font-size: 2rem; color: var(--text); text-decoration: none; transition: color 0.2s; }
+.mobile-drawer a:hover { color: var(--accent); }
+.drawer-hire {
+  font-family: var(--sans) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  padding: 0.65rem 2rem;
+}
+
+/* SECTIONS */
+section { padding: clamp(4rem, 8vh, 7rem) clamp(1.5rem, 6vw, 5rem); border-top: 1px solid var(--border); }
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-label::after { content: ''; width: 40px; height: 1px; background: var(--border); }
+
+h2.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin-bottom: 2.5rem;
+}
+h2.section-title em { font-style: italic; color: var(--accent); }
+
+/* HERO */
+#hero {
+  border-top: none !important;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.eyebrow::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--accent); }
+
+h1.hero-name { font-family: var(--serif); font-size: clamp(3.5rem, 9vw, 8rem); line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 0.25em; }
+h1.hero-name em { font-style: italic; color: var(--accent); }
+
+.hero-tagline { font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; }
+
+.hero-ctas { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--text);
+  color: var(--bg);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.85rem 2rem;
+  border-radius: 100px;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+
+.btn-secondary { font-size: 0.875rem; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+.btn-secondary:hover { color: var(--text); border-color: var(--text); }
+
+/* SKILLS */
+.skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.skills-intro p { color: var(--muted); font-weight: 300; font-size: 1.05rem; }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.skill-item { background: var(--bg-card); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; transition: background 0.2s; }
+.skill-item:hover { background: var(--accent-bg); }
+.skill-icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
+.skill-name { font-size: 0.95rem; font-weight: 500; }
+.skill-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+/* SERVICES */
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.service-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+.service-number { font-size: 0.75rem; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; }
+.service-title { font-family: var(--serif); font-size: 1.35rem; line-height: 1.2; }
+.service-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; flex: 1; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag { font-size: 0.7rem; font-weight: 500; background: var(--accent-bg); color: var(--accent); border-radius: 100px; padding: 0.3rem 0.75rem; }
+
+/* RESULTS */
+.results-intro { color: var(--muted); font-weight: 300; max-width: 500px; margin-bottom: 2.5rem; margin-top: -1rem; }
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.result-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  transition: transform 0.2s;
+}
+.result-card:hover { transform: translateY(-3px); }
+.result-num { font-family: var(--serif); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--accent); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.3rem; }
+.result-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.result-growth { font-size: 1.5rem; font-weight: 500; color: #1A7A3C; margin-bottom: 0.3rem; }
+.result-period { font-size: 0.8rem; color: var(--muted); }
+
+/* CLIENTS */
+.clients-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.client-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  cursor: default;
+}
+.client-pill:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+
+/* WORK */
+.work-buttons { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+
+.work-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: var(--bg-card);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+  gap: 1rem;
+}
+.work-link-btn:last-child { border-bottom: none; }
+.work-link-btn:hover { background: var(--accent-bg); }
+
+.work-link-left { display: flex; flex-direction: column; gap: 0.25rem; }
+.work-link-type { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.work-link-label { font-size: 1rem; font-weight: 500; color: var(--text); }
+
+.work-link-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  padding: 0.5rem 1.1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.work-link-btn:hover .work-link-cta { background: var(--accent); color: #fff; }
+
+/* PROCESS */
+#process { background: var(--text); color: var(--bg); border-top: none; }
+#process .section-label { color: rgba(249,248,245,0.4); }
+#process .section-label::after { background: rgba(249,248,245,0.15); }
+#process h2.section-title { color: var(--bg); }
+#process h2.section-title em { color: #F4845A; }
+
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.step-num { font-family: var(--serif); font-size: 3rem; color: rgba(249,248,245,0.12); line-height: 1; margin-bottom: 0.75rem; }
+.step-title { font-size: 1rem; font-weight: 500; color: var(--bg); margin-bottom: 0.5rem; }
+.step-desc { font-size: 0.85rem; color: rgba(249,248,245,0.5); line-height: 1.65; }
+
+/* CONTACT */
+#contact { text-align: center; }
+.contact-inner { max-width: 600px; margin: 0 auto; }
+.contact-inner .section-label { justify-content: center; }
+.contact-inner h2 { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.5rem); letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 1.25rem; }
+.contact-inner h2 em { font-style: italic; color: var(--accent); }
+.contact-inner p { color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; font-size: 1.05rem; }
+.contact-links { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.contact-email { font-size: 1.05rem; font-weight: 500; color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 2px; transition: color 0.2s; }
+.contact-email:hover { color: var(--accent); }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 2rem clamp(1.5rem, 6vw, 5rem); display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--muted); }
+
+/* ANIMATIONS */
+.fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-drawer { display: flex; }
+  .skills-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr; }
+  .work-link-btn { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Gail.</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact" class="btn-hire">Hire me</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <a href="#skills" class="drawer-link">Skills</a>
+  <a href="#services" class="drawer-link">Services</a>
+  <a href="#results" class="drawer-link">Results</a>
+  <a href="#clients" class="drawer-link">Clients</a>
+  <a href="#work" class="drawer-link">Work</a>
+  <a href="#contact" class="drawer-link drawer-hire">Hire me</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow">SEO specialist &amp; web developer</div>
+  <h1 class="hero-name">Hi, I'm<br><em>Gail.</em></h1>
+  <p class="hero-tagline">I help businesses rank higher, convert better, and look great online — through sharp SEO strategy and clean, purposeful web development.</p>
+  <div class="hero-ctas">
+    <a href="#contact" class="btn-primary">Let's work together ↗</a>
+    <a href="#services" class="btn-secondary">See what I do →</a>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">What I bring</div>
+  <div class="skills-layout">
+    <div class="skills-intro">
+      <h2 class="section-title">A full toolkit for<br><em>search &amp; the web.</em></h2>
+      <p>I combine technical SEO with hands-on web development — so you get one person who can both rank your site and build it the right way.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item fade-up">
+        <div class="skill-icon">🔍</div>
+        <div class="skill-name">On-page SEO</div>
+        <div class="skill-desc">Meta tags, heading structure, keyword placement, and content optimization.</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">Technical SEO</div>
+        <div class="skill-desc">Site speed, crawlability, indexation, Core Web Vitals, and structured data.</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-icon">📍</div>
+        <div class="skill-name">Local SEO</div>
+        <div class="skill-desc">Google Business Profile, local citations, location pages, and map rankings.</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">WordPress</div>
+        <div class="skill-desc">Theme customization, plugin configuration, performance tuning, and content management.</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">HTML / CSS</div>
+        <div class="skill-desc">Clean, semantic markup and responsive layouts that look great on every device.</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-icon">🗂️</div>
+        <div class="skill-name">Schema markup</div>
+        <div class="skill-desc">JSON-LD structured data for local business, services, FAQs, and rich results.</div>
+      </div>
+      <div class="skill-item fade-up" style="grid-column: 1 / -1;">
+        <div class="skill-icon">📌</div>
+        <div class="skill-name">GBP optimization</div>
+        <div class="skill-desc">Full Google Business Profile setup, category selection, review management, and posting strategy to drive local visibility.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What I offer</div>
+  <h2 class="section-title">Services built to<br><em>drive real results.</em></h2>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-number">01</div>
+      <div class="service-title">SEO Strategy & Execution</div>
+      <p class="service-desc">End-to-end SEO — from keyword research and content planning to on-page optimization and technical audits. I focus on what actually moves rankings.</p>
+      <div class="service-tags">
+        <span class="tag">On-page SEO</span>
+        <span class="tag">Technical SEO</span>
+        <span class="tag">Local SEO</span>
+        <span class="tag">Schema</span>
+      </div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-number">02</div>
+      <div class="service-title">Local Search Domination</div>
+      <p class="service-desc">I help local businesses show up where it counts — Google Maps, local packs, and geo-targeted search. From GBP to location pages, I cover it all.</p>
+      <div class="service-tags">
+        <span class="tag">GBP optimization</span>
+        <span class="tag">Local citations</span>
+        <span class="tag">Location pages</span>
+      </div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-number">03</div>
+      <div class="service-title">Web Development</div>
+      <p class="service-desc">Clean, fast, SEO-ready websites built on WordPress or custom HTML/CSS. I build sites that are easy to manage, quick to load, and built to rank.</p>
+      <div class="service-tags">
+        <span class="tag">WordPress</span>
+        <span class="tag">HTML / CSS</span>
+        <span class="tag">Performance</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="section-label">Proven impact</div>
+  <h2 class="section-title">GBP performance<br><em>across campaigns.</em></h2>
+  <p class="results-intro">Google Business Profile interaction growth tracked across multiple client accounts.</p>
+  <div class="results-grid">
+    <div class="result-card fade-up">
+      <div class="result-num">2,113</div>
+      <div class="result-label">GBP Interactions</div>
+      <div class="result-growth">+583.8%</div>
+      <div class="result-period">Sep 2024 – Jan 2025</div>
+    </div>
+    <div class="result-card fade-up">
+      <div class="result-num">1,277</div>
+      <div class="result-label">GBP Interactions</div>
+      <div class="result-growth">+135.6%</div>
+      <div class="result-period">Oct 2024 – Dec 2024</div>
+    </div>
+    <div class="result-card fade-up">
+      <div class="result-num">173</div>
+      <div class="result-label">GBP Interactions</div>
+      <div class="result-growth">+38.4%</div>
+      <div class="result-period">Nov 2025 – Jan 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="section-label">Who I've worked with</div>
+  <h2 class="section-title">Clients I've<br><em>helped grow.</em></h2>
+  <div class="clients-grid">
+    <div class="client-pill fade-up">Bray Electrical</div>
+    <div class="client-pill fade-up">AGS Photo Art</div>
+    <div class="client-pill fade-up">Bug Shockers – Overland Park</div>
+    <div class="client-pill fade-up">ShopTown</div>
+    <div class="client-pill fade-up">Pools Etc.</div>
+    <div class="client-pill fade-up">Green Dot Painting</div>
+    <div class="client-pill fade-up">Wellnest Aesthetic Lounge</div>
+    <div class="client-pill fade-up">Sierra Crest Tree Service</div>
+    <div class="client-pill fade-up">Masters Roofing</div>
+    <div class="client-pill fade-up">Bug Shockers</div>
+    <div class="client-pill fade-up">New Discoveries Early Learning Center</div>
+    <div class="client-pill fade-up">Threshold Management</div>
+    <div class="client-pill fade-up">San Diego Service Group</div>
+    <div class="client-pill fade-up">Expert Epoxy</div>
+    <div class="client-pill fade-up">Hoosier Design Build</div>
+    <div class="client-pill fade-up">Integrity Roofers</div>
+    <div class="client-pill fade-up">THE – Pompano Beach</div>
+    <div class="client-pill fade-up">THE – North Charleston</div>
+    <div class="client-pill fade-up">Allixo</div>
+    <div class="client-pill fade-up">Storage Units Daytona Beach</div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-label">My work</div>
+  <h2 class="section-title">Design & development<br><em>samples.</em></h2>
+  <div class="work-buttons">
+    <a href="https://www.figma.com/slides/OwEbw6pqgSFlCrDmkenKLv/Graphic-Design?t=C9QekZIN20CwUyT3-6" target="_blank" class="work-link-btn fade-up">
+      <div class="work-link-left">
+        <span class="work-link-type">Graphic Design</span>
+        <span class="work-link-label">GBP Graphics & Visual Assets</span>
+      </div>
+      <span class="work-link-cta">View in Figma ↗</span>
+    </a>
+    <a href="https://www.figma.com/design/bWR6nF4Q3MPSwP7FzrAiNb/Web-Developement?m=auto&t=C9QekZIN20CwUyT3-6" target="_blank" class="work-link-btn fade-up">
+      <div class="work-link-left">
+        <span class="work-link-type">Web Development</span>
+        <span class="work-link-label">Templates & Site Updates</span>
+      </div>
+      <span class="work-link-cta">View in Figma ↗</span>
+    </a>
+    <a href="https://eliteeventsdjs.com/" target="_blank" class="work-link-btn fade-up">
+      <div class="work-link-left">
+        <span class="work-link-type">Live Website</span>
+        <span class="work-link-label">Elite Events DJs</span>
+      </div>
+      <span class="work-link-cta">Visit live site ↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-label">How I work</div>
+  <h2 class="section-title">Simple process,<br><em>clear outcomes.</em></h2>
+  <div class="process-steps">
+    <div class="process-step fade-up">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery</div>
+      <p class="step-desc">We start with a deep-dive into your goals, current performance, and target audience to find the biggest opportunities.</p>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">02</div>
+      <div class="step-title">Strategy</div>
+      <p class="step-desc">I build a clear, prioritized action plan — no fluff, just the moves that will make the biggest difference for your business.</p>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">03</div>
+      <div class="step-title">Execution</div>
+      <p class="step-desc">I get to work — implementing on-page changes, building out content, fixing technical issues, and setting up your local presence.</p>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">04</div>
+      <div class="step-title">Reporting</div>
+      <p class="step-desc">You'll always know what's working. I send clear, jargon-free reports so you can see the impact of every decision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content: center;">Let's connect</div>
+    <h2>Ready to grow<br><em>your search presence?</em></h2>
+    <p>I'm open to freelance projects, ongoing retainers, and part-time collaborations. Let's talk about what you need.</p>
+    <div class="contact-links">
+      <a href="mailto:galimpolos18@gmail.com" class="contact-email">galimpolos18@gmail.com</a>
+      <a href="mailto:galimpolos18@gmail.com" class="btn-primary">Send me a message ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Gail. All rights reserved.</span>
+  <span>SEO & Web Developer</span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobileDrawer');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    drawer.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 100;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
